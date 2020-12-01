@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>正在考试中...</title>
+    </head>
+    <body>
+        <div class="context">
+            <span th:text="${question.qid}" class="id"  name ="currentNumber" value="${question.qid}"/>
+            <span>.</span>
+            <span th:text="${question.title}" /><br>
+            <div th:each="item:${#strings.listSplit(question.choices,',')}" >
+                <input th:text="${item}" type="radio" name="answer">
+            </div>
+        </div>
+        <div class="button">
+            <div>
+                <button class="pre" onclick="pre()">上一题</button>
+                <button class="next" onclick="next()">下一题</button>
+            </div>
+            <div>如果可以 这里想显示方框</div>
+        </div>
+
+        <script type="text/javascript">
+            //按钮下一题的点击事件
+            function next() {
+                var xmlHttp = new XMLHttpRequest();
+                xmlHttp.open("post","next?currentNumber="+document.getElementsByClassName("id")[0].innerText,true);
+                xmlHttp.onreadystatechange = function () {
+                    if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
+                        var question = JSON.parse(xmlHttp.responseText);
+                        var context = document.getElementsByClassName("context")[0];
+                        context.innerHTML="";
+
+                        var tid = document.createElement("span");
+                        tid.setAttribute("class","id");
+                        tid.setAttribute("name","currentNumber");
+                        tid.setAttribute("value","question.qid");
+                        tid.innerText = question.qid ;
+                        context.appendChild(tid);
+                        var span = document.createElement("span");
+                        span.innerText = ".";
+                        context.appendChild(span);
+
+                        var title = document.createElement("span");
+                        title.innerText = question.title ;
+                        context.appendChild(title);
+                        context.appendChild(document.createElement("br"));
+
+                        var div = document.createElement("div");
+                        context.appendChild(div);
+
+                        var arr = question.choices.split(",");
+                        for(var i = 0 ;i < arr.length ;i ++){
+                            var input = document.createElement("input");
+                            input.setAttribute("name","answer");
+                            input.setAttribute("type","radio");
+                            div.appendChild(input);
+
+                            var span = document.createElement("span");
+                            span.innerText = arr[i];
+                            div.appendChild(span);
+                            div.appendChild(document.createElement("br"));
+                        }
+                    }
+                }
+                xmlHttp.send();
+            }
+
+            //按钮上一题的点击事件
+            function pre(){
+                var xhr = new XMLHttpRequest();
+                xhr.open("post","pre?currentNumber="+document.getElementsByClassName("id")[0].innerText,true);
+                xhr.onreadystatechange = function () {
+                    if(xhr.readyState == 4 && xhr.status == 200){
+                        var question = JSON.parse(xhr.responseText);
+                        var context = document.getElementsByClassName("context")[0];
+                        context.innerHTML="";
+
+                        var tid = document.createElement("span");
+                        tid.setAttribute("class","id");
+                        tid.setAttribute("name","currentNumber");
+                        tid.setAttribute("value","question.qid");
+                        tid.innerText = question.qid ;
+                        context.appendChild(tid);
+                        var span = document.createElement("span");
+                        span.innerText = ".";
+                        context.appendChild(span);
+
+                        var title = document.createElement("span");
+                        title.innerText = question.title ;
+                        context.appendChild(title);
+                        context.appendChild(document.createElement("br"));
+
+                        var div = document.createElement("div");
+                        context.appendChild(div);
+
+                        var arr = question.choices.split(",");
+                        for(var i = 0 ;i < arr.length ;i ++){
+                            var input = document.createElement("input");
+                            input.setAttribute("name","answer");
+                            input.setAttribute("type","radio");
+                            div.appendChild(input);
+
+                            var span = document.createElement("span");
+                            span.innerText = arr[i];
+                            div.appendChild(span);
+                            div.appendChild(document.createElement("br"));
+                        }
+                    }
+                }
+                xhr.send();
+            }
+        </script>
+    </body>
+</html>

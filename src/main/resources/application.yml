@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/exam?useSSL=false&&characterEncoding=UTF-8&serverTimezone= CST
+    username: root
+    password: root18268174991@
+
+server:
+  port: 8090

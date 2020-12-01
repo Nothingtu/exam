@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>登录页面</title>
+        <style>
+            .container{
+                background: lightblue;
+                width: 350px;
+                height: 250px;
+                margin-top: 50px;
+                margin-left: auto;
+                margin-right: auto;
+                border-radius: 10px;
+            }
+            .formBox{
+                margin-top: 8px;
+                padding-left: 60px;
+                padding-right: 50px;
+            }
+            input{
+                margin-top: 15px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            button{
+                margin-right: 20px;
+                margin-left: 80px;
+            }
+            .sub{
+                margin-left: 30px;
+            }
+            .lab{
+                width: 161.5px;
+                padding: 10.5px 95px;
+                text-align: center;
+                font-size: 20px;
+            }
+            .flag{
+                width: 161.5px;
+                padding: 1px 95px 1px 95px;
+                text-align: center;
+                font-size: 8px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="flag">
+                <p th:if="${flag}" >信息填写错误，请重新输入</p>
+            </div>
+            <div class="lab">
+                <strong >渡一学生管理系统</strong>
+            </div>
+            <form class="formBox" action="/login" method="post">
+                姓名:<input type="text" name="name" value=""><br>
+                学号:<input type="text" name="id" value=""><br>
+                密码:<input type="password" name="password" value=""><br>
+                <input type="submit" class="sub">
+                <button>注册</button>
+            </form>
+        </div>
+
+    </body>
+</html>
